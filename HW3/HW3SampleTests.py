@@ -1,5 +1,5 @@
 import unittest
-from HW3 import *
+from HW3.HW3 import *
 
 debug = False
 if(debug):
