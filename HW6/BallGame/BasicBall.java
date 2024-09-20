@@ -10,11 +10,12 @@
  ******************************************************************************/
 
 import java.awt.Color;
+//import java.util.ArrayList;
 
 public class BasicBall { 
     protected double rx, ry;         // position
     protected double vx, vy;         // velocity
-    protected double radius;   // radius
+    protected double radius;         // radius
     protected final Color color;     // color
     public boolean isOut;
     
@@ -29,7 +30,6 @@ public class BasicBall {
         color = c;
         isOut = false;
     }
-   
    
     // move the ball one step
     public void move() {
@@ -49,13 +49,16 @@ public class BasicBall {
     	
     }
 
+    //reset ball position and randomize movement
     public int reset() {
         rx = 0.0;
         ry = 0.0;  	
-        // TO DO: assign a random speed 
+        //Change movement
+        this.vx = StdRandom.uniform(-0.01, 0.01);
+        this.vy = StdRandom.uniform(-0.01, 0.01);
         return 1;
     }
-    
+
     public boolean isHit(double x, double y) {
     	if ((Math.abs(rx-x)<=radius) && (Math.abs(ry-y)<=radius))
 			return true;
@@ -70,5 +73,19 @@ public class BasicBall {
     	return radius;
     }
 
+    //getType Method
+    //getType returns the type of this ball as a String.
+    public String getType() {
+        return "basic";
+    }
 
+    //Tried to make this a method within BasicBall, however I found that by putting it in the game code,
+    //there was a lower chance of there being thread synchronization problems. When too many balls are clicked at the
+    //same time, it produces a heap error because the list of ball is trying to be modified by too many threads.
+    //When it's in BallGame.java, it crashes less, honestly not sure why.
+
+    /*public synchronized void addBall(ArrayList<BasicBall> balls, double r, Color c) {
+        SplitBall newBall = new SplitBall(r, c);
+        balls.add(newBall);
+    }*/
 }
